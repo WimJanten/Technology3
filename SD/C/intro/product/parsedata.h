@@ -1,6 +1,8 @@
 #ifndef PARSEDATA_H
 #define PARSEDATA_H
 
-int ParseData(char inputname[] , int* N, int arr[], int* K);
+int GetSize(int *N);
+int GetArray(int arr[], int size);
+int GetK(int *K);
 
 #endif

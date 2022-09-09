@@ -1,28 +1,46 @@
 #include "parsedata.h"
 #include <stdio.h>
 
-int ParseData(char inputname[], int* N, int arr[], int* K)
+int GetSize(int *N)
 {
-    //read file file
-    FILE *file = fopen(inputname, "r");
-    if(file == NULL){
+    if (N == NULL)
+    {
         return -1;
     }
-    if(fscanf(file, "%i", N) != 1){
-        fclose(file);
+
+    if (scanf("%i", N) != 1)
+    {
         return -1;
     }
-    for(int i = 0; i < *N; i++){
-        if(fscanf(file, "%i", &arr[i]) != 1){
-            fclose(file);
+    return 0;
+}
+
+int GetArray(int arr[], int size){
+
+    if(arr == NULL || size < 0)
+    {
+        return -1;
+    }
+    for(int i = 0; i < size; i++)
+    {
+        if(scanf("%i", &arr[i]) != 1)
+        {
             return -1;
         }
     }
-    if(fscanf(file, "%i", K) != 1){
-        fclose(file);
+    return 0;
+}
+
+int GetK(int *K)
+{
+    if (K == NULL)
+    {
         return -1;
     }
-    fclose(file);
-    return 1;
-    
+
+    if (scanf("%i", K) != 1)
+    {
+        return -1;
+    }
+    return 0;
 }
