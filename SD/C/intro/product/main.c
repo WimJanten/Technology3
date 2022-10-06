@@ -32,14 +32,14 @@ int main(int argc, char* argv[])
     else if (selectedAssignment == 2)
     {
         int difference = 0;
-        //ComputeDifferenceBetweenMaxAndMinSumOfKElements_0( /* TODO: fill in parameters */ );
+        ComputeDifferenceBetweenMaxAndMinSumOfKElements_0(arr, N, K, &difference);  
 
         printf("%d\n", difference);
     }
     else if (selectedAssignment == 31)
     {
         int difference = 0;
-        //ComputeDifferenceBetweenMaxAndMinSumOfKElements_1( /* TODO: fill in parameters */ );
+        ComputeDifferenceBetweenMaxAndMinSumOfKElements_1(arr, N, K, &difference);
         printf("%d\n", difference);
     }
     else if (selectedAssignment == 32)
