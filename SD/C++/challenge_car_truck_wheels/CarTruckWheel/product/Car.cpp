@@ -50,6 +50,8 @@ Car& Car::operator=(const Car& other){
         {
             wheels.push_back(new Wheel(wheel->GetDiameter(), wheel->GetMaterial()));
         }
+        SetLicencePlate(other.GetLicencePlate());
+        model = other.GetModel();
     }
     return *this;
 }

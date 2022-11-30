@@ -17,35 +17,40 @@ protected:
     }
 
     void CheckWheels(int n);// example of a method within the cartest class
+    void TestCopyConstructor();
+    void TestAssignmentOperator();
 
 
     Car* c;
 };
 
-void CarTest::CheckWheels(int n)
-{
-    // just an example which need to be completed
-    for (int i = 0; i < n; i++)
-    {
-        const Wheel* w = c->GetWheel(i);
-        ASSERT_TRUE(w != NULL);
-        // not everything is tested. to be finished
-    }
+void CarTest::TestCopyConstructor(){
+    Car* c2 = new Car(*c);
+    ASSERT_TRUE(c2 != NULL);
+    ASSERT_TRUE(c2->GetModel() == c->GetModel());
+    ASSERT_TRUE(c2->GetLicencePlate() == c->GetLicencePlate());
+    ASSERT_TRUE(c2->GetNrWheels() == c->GetNrWheels());
+    delete c2;
+    c2 = NULL;
 }
 
-// just to show how you can call a method from a useless test.
-// and how to introduce a memoryleak
-TEST_F(CarTest, test_ifAllWheelsAreThere)
-{
-    const Wheel* w = c->GetWheel(2);
-    ASSERT_TRUE(w != NULL);
-    CheckWheels(4);
+void CarTest::TestAssignmentOperator(){
+    Car* c2 = new Car("Audi A4", "Alloy", 20, 4);
+    *c2 = *c;
+    ASSERT_TRUE(c2 != NULL);
+    ASSERT_TRUE(c2->GetModel() == c->GetModel());
+    ASSERT_TRUE(c2->GetLicencePlate() == c->GetLicencePlate());
+    ASSERT_TRUE(c2->GetNrWheels() == c->GetNrWheels());
+    delete c2;
+    c2 = NULL;
 }
 
-TEST_F(CarTest, test_ifLicencePlateIsSet)
+TEST_F(CarTest, test_copyConstructor)
 {
-    c->SetLicencePlate("1-ABC-123");
-    ASSERT_EQ("1-ABC-123", c->GetLicencePlate());
+    TestCopyConstructor();
 }
 
-
+TEST_F(CarTest, test_assignmentOperator)
+{
+    TestAssignmentOperator();
+}

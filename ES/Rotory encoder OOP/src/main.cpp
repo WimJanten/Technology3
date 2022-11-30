@@ -77,7 +77,7 @@ led led2(port2, 5);
 
 extern "C" void EXTI0_IRQHandler(void)  // Do not forget the ‘extern “C”’ in case of C++
 {
-    EXTI->PR = EXTI_PR_PR0;
+    EXTI->PR = EXTI_PR_PR0; //reset interrupt flag
 
     const int MSGBUFSIZE = 80;
     char msgBuf[MSGBUFSIZE];
@@ -86,17 +86,16 @@ extern "C" void EXTI0_IRQHandler(void)  // Do not forget the ‘extern “C”�
     {
       led1.on();
       led2.off();
-      snprintf(msgBuf, MSGBUFSIZE, "Links\n");
+      snprintf(msgBuf, MSGBUFSIZE, "L");
     }
     else
     {
       led1.off();
       led2.on();
-      snprintf(msgBuf, MSGBUFSIZE, "Rechts\n");
+      snprintf(msgBuf, MSGBUFSIZE, "R");
     }
+    
     HAL_UART_Transmit(&huart2, (uint8_t *)msgBuf, strlen(msgBuf), HAL_MAX_DELAY);
-
-    // handle interrupt here
 }
 
 int main(void)
@@ -111,16 +110,16 @@ int main(void)
   GPIOA->MODER = (GPIOA->MODER & ~GPIO_MODER_MODER0) | (0b00 << GPIO_MODER_MODER0_Pos); // set pin PA0 to input
   GPIOA->MODER = (GPIOA->MODER & ~GPIO_MODER_MODER1) | (0b00 << GPIO_MODER_MODER1_Pos); // set pin PA1 to input
 
-  GPIOA->PUPDR = (GPIOA->PUPDR & ~GPIO_PUPDR_PUPDR0) | (0b00 << GPIO_PUPDR_PUPDR0_Pos);
-  GPIOA->PUPDR = (GPIOA->PUPDR & ~GPIO_PUPDR_PUPDR1) | (0b00 << GPIO_PUPDR_PUPDR1_Pos);
+  GPIOA->PUPDR = (GPIOA->PUPDR & ~GPIO_PUPDR_PUPDR0) | (0b00 << GPIO_PUPDR_PUPDR0_Pos); //set pin PA0 to no pull-up, no pull-down
+  GPIOA->PUPDR = (GPIOA->PUPDR & ~GPIO_PUPDR_PUPDR1) | (0b00 << GPIO_PUPDR_PUPDR1_Pos); //set pin PA1 to no pull-up, no pull-down
 
-  SYSCFG->EXTICR[0] = (SYSCFG->EXTICR[0] & ~SYSCFG_EXTICR1_EXTI0) | (0b000 << SYSCFG_EXTICR1_EXTI0_Pos);
-  EXTI->FTSR = EXTI_FTSR_FT0;
-  EXTI->IMR = EXTI_IMR_MR0;
-  NVIC_EnableIRQ(EXTI0_IRQn);
+  SYSCFG->EXTICR[0] = (SYSCFG->EXTICR[0] & ~SYSCFG_EXTICR1_EXTI0) | (0b000 << SYSCFG_EXTICR1_EXTI0_Pos); //connect PA0 to interrupt EXTI0
+  EXTI->FTSR = EXTI_FTSR_FT0; //Set interrupt to falling edge
+  EXTI->IMR = EXTI_IMR_MR0; //Unmask interrupt
+  NVIC_EnableIRQ(EXTI0_IRQn); //Enable interrupt
 
-  led1.init();
-  led2.init();
+  led1.init(); //init led1
+  led2.init(); //init led2
 
   while(true){
     __WFI();

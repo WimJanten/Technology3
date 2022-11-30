@@ -108,20 +108,6 @@ int main(void)
   char msgBuf[MSGBUFSIZE];
   snprintf(msgBuf, MSGBUFSIZE, "%s", "Hello World!\r\n");
   HAL_UART_Transmit(&huart2, (uint8_t *)msgBuf, strlen(msgBuf), HAL_MAX_DELAY);
-  while (1)
-  {
-    /* USER CODE END WHILE */
-    snprintf(msgBuf, MSGBUFSIZE, "%s", "In loop!\r\n");
-    HAL_UART_Transmit(&huart2, (uint8_t *)msgBuf, strlen(msgBuf), HAL_MAX_DELAY);
-    GPIOA->ODR ^= (1 << 5); // Toggle GPIO pin PA5 (onboard green LED).
-    HAL_Delay(1000);
-    /* USER CODE BEGIN 3 */
-
-    GPIOA->MODER = (GPIOA->MODER & ~GPIO_MODER_MODER4_0) |
-    (0b00 << GPIO_MODER_MODER4);       // set pin PA* to output.
-    GPIOA->OTYPER &= ~GPIO_OTYPER_OT_4;                   // set pin PA* to output type to push-pull
-    GPIOA->ODR |= GPIO_ODR_4;                             // set pin PA* to high
-  }
   /* USER CODE END 3 */
 }
 

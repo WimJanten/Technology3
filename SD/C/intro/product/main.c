@@ -45,13 +45,13 @@ int main(int argc, char* argv[])
     else if (selectedAssignment == 32)
     {
         int difference = 0;
-        //ComputeDifferenceBetweenMaxAndMinSumOfKElements_2( /* TODO: fill in parameters */ );
+        ComputeDifferenceBetweenMaxAndMinSumOfKElements_2(arr, N, K, &difference);
         printf("%d\n", difference);
     }
     else if (selectedAssignment == 33)
     {
         int difference = 0;
-        //ComputeDifferenceBetweenMaxAndMinSumOfKElements_3( /* TODO: fill in parameters */ );
+        ComputeDifferenceBetweenMaxAndMinSumOfKElements_3(arr, N, K, &difference);
         printf("%d\n", difference);
     }
     else
